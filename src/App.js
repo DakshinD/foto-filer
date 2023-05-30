@@ -1,14 +1,22 @@
-import logo from './logo.svg';
 import NavBar from './navbar';
+import HeroSection from './herosection';
+import DescriptionSection from './description';
+import PersonalInfoSection from './personalinfo';
 import './App.css';
+
 
 function App() {
   return (
     <div className="App">
-        <div>
+        <div className = "Front-Page">
             <NavBar/>
+            <HeroSection />
+            <DescriptionSection />
+            <PersonalInfoSection />
         </div>
-
+        
+        
+        
     </div>
   );
 }
