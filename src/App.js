@@ -1,19 +1,28 @@
 import NavBar from './navbar';
-import HeroSection from './herosection';
-import DescriptionSection from './description';
-import PersonalInfoSection from './personalinfo';
 import Footer from './footer'
+import HomePage from './pages/Home';
+import SortPage from './pages/Sort';
 import './App.css';
 
 
 function App() {
+
+  let Component = <HomePage />
+
+  switch(window.location.pathname) {
+    case "/home":
+      Component = <HomePage />
+      break
+    case "/sort":
+      Component = <SortPage />
+      break
+  }
+
   return (
     <div className="App">
         <div className = "Front-Page">
             <NavBar />
-            <HeroSection />
-            <DescriptionSection />
-            <PersonalInfoSection />
+            {Component}
             <Footer />
         </div>
         
