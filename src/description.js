@@ -46,7 +46,7 @@ export default function Example() {
         </div>
         <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
           <img
-            className="w-[10rem] max-w-none rounded-xl bg-transparent  sm:w-[57rem]"
+            className="w-[10rem] max-w-2xl rounded-xl bg-transparent  sm:w-[57rem]"
             src={girlworking}
             alt=""
           />
