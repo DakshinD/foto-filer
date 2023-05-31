@@ -1,5 +1,5 @@
 import { UserGroupIcon, ChatBubbleBottomCenterTextIcon, ShieldCheckIcon } from '@heroicons/react/20/solid'
-import girlworking from './img/personworking.svg'
+import girlworking from './img/workinghighres.png'
 
 
 export default function Example() {
@@ -34,7 +34,7 @@ export default function Example() {
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:pr-4">
             <div className="lg:max-w-lg">
-              <p className="text-base font-semibold leading-7 text-indigo-600">Sort faster</p>
+              <p className="text-base font-semibold leading-7 text-purple-600">Sort faster</p>
               <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Group photos with ease</h1>
               <p className="mt-6 text-xl leading-8 text-gray-700">
                 FotoFiler provides a effortless way to sort photos based on the people in them. From portraits to 
@@ -46,7 +46,7 @@ export default function Example() {
         </div>
         <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
           <img
-            className="w-[10rem] max-w-2xl rounded-xl bg-transparent  sm:w-[57rem]"
+            className="w-[10rem] max-w-2xl rounded-xl bg-transparent display-hidden sm:w-[57rem]"
             src={girlworking}
             alt=""
           />
@@ -61,21 +61,21 @@ export default function Example() {
               </p>
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
                 <li className="flex gap-x-3">
-                  <UserGroupIcon className="mt-1 h-5 w-5 flex-none text-indigo-600"  />
+                  <UserGroupIcon className="mt-1 h-5 w-5 flex-none text-purple-600"  />
                   <span>
                     <strong className="font-semibold text-gray-900">Sort your photos.</strong> Utilize AI to make your life easier by
                     sorting you photos by face, even in groups. Drag and drop pictures afterwards to perfect your customized galleries for sending.
                   </span>
                 </li>
                 <li className="flex gap-x-3">
-                  <ChatBubbleBottomCenterTextIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" />
+                  <ChatBubbleBottomCenterTextIcon className="mt-1 h-5 w-5 flex-none text-purple-600" />
                   <span>
                     <strong className="font-semibold text-gray-900">Send your pictures.</strong> Text or email your pictures
                     to each person with a click of the button. Simply input their number or email address and your files are on the way.
                   </span>
                 </li>
                 <li className="flex gap-x-3">
-                  <ShieldCheckIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" />
+                  <ShieldCheckIcon className="mt-1 h-5 w-5 flex-none text-purple-600" />
                   <span>
                     <strong className="font-semibold text-gray-900">Secure Data.</strong> FotoFiler keeps no data of
                     your images or faces that the algorithm recognizes. Our facial recognition algorithm is ran at the surface level,

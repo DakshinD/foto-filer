@@ -4,7 +4,7 @@ import CustomFileInput from './sort-components/CustomFileInput'
 export default function Example() {
 
     return (
-      <div className="h-full flex justify-center items-center">
+      <div className="h-screen flex justify-center items-center">
 
         <div className="absolute inset-0 -z-10 overflow-hidden">
             <svg

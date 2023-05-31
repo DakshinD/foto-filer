@@ -12,6 +12,10 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
         return file.name 
     }
 
+    function sortFiles(files) {
+
+    }
+
   export default function Example({files, stateChanger}) {
 
 
@@ -19,7 +23,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
     <div className='bg-gray-900 rounded-lg'>
         <ul role="list" className="divide-y divide-gray-700 ">
             <li key='header12345' className="flex justify-between gap-x-6 py-5 bg-gray-800 rounded-lg">
-                {/* header - need to fix this spacing space-x-[8rem] sm:space-x-[20rem] md:space-x-[30rem]*/}
+                {/* header*/}
                 <div className="flex-1 mx-10 text-left items-center">
                     
                     <p className="flex float-left text-2xl font-bold text-white">Files</p>
@@ -32,8 +36,9 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
                             Clear Files
                         </button>
 
+                        {/* POST to the Flask server right here */}
                         <button
-                            
+                            onClick = {sortFiles} 
                             className="rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
                         >
                             Sort

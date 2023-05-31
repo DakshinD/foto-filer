@@ -5,7 +5,7 @@ const people = [
       role: 'Developer',
       imageUrl:
       'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
-        description: 'Incoming CS Major at UT Austin, aspiring software developer',
+        description: 'Incoming CS Major at UT Austin with a love for competitive programming and mobile development',
     },
     {
       name: 'Hari Shankar',
@@ -28,14 +28,14 @@ const people = [
               FotoFiler is a project made by 2 students inspired by a camera roll full of graduation pics
             </p>
           </div>
-          <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+          <ul role="list" className=" grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
             {people.map((person) => (
               <li key={person.name}>
-                <div className="flex items-center gap-x-6">
+                <div className="bg-gray-900 rounded-lg p-5 border-2 border-gray-800 drop-shadow-lg shadow-gray-800 flex items-center gap-x-6 shadow">
                   <img className="h-50 w-16 rounded-full" src={person.imageUrl} alt="" />
                   <div>
                     <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-100">{person.name}</h3>
-                    <p className="text-sm font-semibold leading-6 text-indigo-600">{person.role}</p>
+                    <p className="text-sm font-semibold leading-6 text-purple-500">{person.role}</p>
                     <p className="text-sm font-semibold leading-6 text-gray-300">{person.description}</p>
                   </div>
                 </div>
