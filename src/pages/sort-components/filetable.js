@@ -17,15 +17,14 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
     return (
     <div className='bg-gray-900 rounded-lg'>
-        <ul role="list" className="divide-y divide-gray-400 ">
+        <ul role="list" className="divide-y divide-gray-700 ">
             <li key='header12345' className="flex justify-between gap-x-6 py-5 bg-gray-800 rounded-lg">
-                {/* header - need to fix this spacing*/}
-                <div className="flex space-x-[8rem] sm:space-x-[20rem] md:space-x-[30rem] mx-10 text-left space-x-max items-center">
+                {/* header - need to fix this spacing space-x-[8rem] sm:space-x-[20rem] md:space-x-[30rem]*/}
+                <div className="flex-1 mx-10 text-left items-center">
                     
-                    <p className="text-2xl font-bold leading-6 text-white">Files</p>
+                    <p className="flex float-left text-2xl font-bold text-white">Files</p>
 
-                    <div className='space-x-4 xs
-                    :space-y-4'>
+                    <div className='flex float-right space-x-4 xs:space-y-4 '>
                         <button
                             onClick ={() => stateChanger([])}
                             className="rounded-md bg-red-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700"
@@ -34,6 +33,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
                         </button>
 
                         <button
+                            
                             className="rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
                         >
                             Sort
@@ -45,11 +45,13 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
             </li>
             {files.map(file => (
             <li key={file.name} className="flex justify-between gap-x-6 py-5 bg-gray-900 rounded-b-lg">
-                <div className="flex gap-x-4 mx-10 text-left">
-                    {/*  how to space them apart at ends? */}
-                    <p className="text-md font-semibold leading-6 text-white">{file.name}</p>
+                <div className="flex-1 gap-x-4 mx-10 text-left">
 
-                    <button className="bg-gray-100 rounded-full p-1 inline-flex items-center justify-center fill-gray-800 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                    <p className="float-left text-md font-semibold leading-6 text-white">{file.name}</p>
+
+                    <button 
+                        onClick = {() => stateChanger(files.filter(curr => curr.name !== file.name))}
+                        className="float-right bg-gray-100 rounded-full p-1 inline-flex items-center justify-center fill-gray-800 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                         <XMarkIcon className="block h-4 w-4"/>
                     </button>
                     
