@@ -4,7 +4,6 @@ import { useState } from 'react'
 
 
 export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <div className="bg-gray-900 pt-10">
