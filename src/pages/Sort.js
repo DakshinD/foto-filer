@@ -1,24 +1,22 @@
 import React from 'react';
-import { ArrowUpTrayIcon } from '@heroicons/react/20/solid'
+import CustomFileInput from './CustomFileInput'
 
 export default function Example() {
     return (
       <div className="h-screen flex justify-center items-center">
 
-            <button className="w-2/5 h-16 mt-height/2 rounded-md bg-indigo-600 px-10 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <div>
+                <div className="text-4xl font-bold tracking-tight text-black sm:text-6xl pb-10 text-center">
+                    <span className="text-4xl font-bold tracking-tight text-transparent sm:text-6xl bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]">Sort</span> your pictures with ease
+                </div>
                 
-                <div className='flex justify-center items-center space-between'>   
-                    <div className='mt-1 h-5 w-5 flex-none text-white'>
-                        <ArrowUpTrayIcon />
-                    </div>
-                    <div>
-                        Upload your pictures
-                    </div>
-                </div> 
-                
-            </button>
+                <div className='container flex justify-center items-center'>
+                    <CustomFileInput className='w-2/5'/> {/*need to add functionality still */}
+                </div>
+            </div>
             
-
+            
+            
         
       </div>
     )
