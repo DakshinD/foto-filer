@@ -3,6 +3,7 @@ import face_recognition as fr
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
@@ -10,7 +11,7 @@ def hello_world():
 @app.route("/sort", methods = ['POST'])
 def hi():
 
-    #assuming request is a multipaart form 
+    #assuming request is a multipart form 
 
     images = request.files.values()
 
