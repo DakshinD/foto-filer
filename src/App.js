@@ -2,6 +2,7 @@ import NavBar from './navbar';
 import Footer from './footer'
 import HomePage from './pages/Home';
 import SortPage from './pages/Sort';
+import FacesPage from './pages/Faces';
 import './App.css';
 
 
@@ -15,6 +16,9 @@ function App() {
       break
     case "/sort":
       Component = <SortPage />
+      break
+    case "/faces":
+      Component = <FacesPage />
       break
   }
 

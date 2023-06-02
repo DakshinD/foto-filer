@@ -8,6 +8,7 @@ const path = window.location.pathname
 const navigation = [
     { name: 'Home', href: '/home', current: path === '/home' },
     { name: 'Sort', href: '/sort', current: path === '/sort'  },
+    { name: 'Faces', href: '/faces', current: path === '/faces'  },
 ]
 
 

@@ -26,7 +26,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
                 {/* header*/}
                 <div className="flex-1 mx-10 text-left items-center">
                     
-                    <p className="flex float-left text-2xl font-bold text-white">Files</p>
+                    <p className="flex float-left text-2xl font-semibold text-white">Files</p>
 
                     <div className='flex float-right space-x-4 xs:space-y-4 '>
                         <button
