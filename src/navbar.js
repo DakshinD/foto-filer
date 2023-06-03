@@ -9,6 +9,7 @@ const navigation = [
     { name: 'Home', href: '/home', current: path === '/home' },
     { name: 'Sort', href: '/sort', current: path === '/sort'  },
     { name: 'Faces', href: '/faces', current: path === '/faces'  },
+    { name: 'Person', href: '/person', current: path === '/person'  },
 ]
 
 

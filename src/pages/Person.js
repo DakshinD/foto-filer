@@ -1,3 +1,4 @@
+import { useState } from "react"
 const products = [
     {
       id: 1,
@@ -77,12 +78,19 @@ const products = [
   function pushNewView() {
     console.log("clicked a card")
   }
-  
-  export default function Example() {
-    return (
-    <div className="flex flex-col bg-gray-100 shadow-2xl">
 
-      <div className="flex min-h-[50%] justify-center">
+export default function Example() {
+
+    const [name, setName] = useState("Person");
+
+    const onNameChangeHandler = event => {
+        setName(event.target.value);
+    }
+
+    return (
+    <div className="flex flex-col md:flex-row md:flex-row bg-gray-100 shadow-2xl">
+
+      <div className="flex-1 flex min-w-screen md:max-w-[50%] min-h-[50%] md:min-h-screen justify-center ">
         <div className="flex-1 bg-gray-900 backdrop-blur-xl items-start">
         <div
           className="absolute mt-40 inset-x-0 -top-40 -z-10 transform-gpu overflow-clip blur-3xl sm:-top-40"
@@ -98,22 +106,50 @@ const products = [
         </div>
 
         {/* actual text */} 
-          <div className="text-4xl font-bold tracking-tight text-white sm:text-6xl py-10 text-center mx-10">
-              We found <span className="text-4xl font-bold tracking-tight text-transparent sm:text-6xl bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]">{products.length}</span> unique people in your pictures
+        <div className="text-4xl font-bold tracking-tight text-white sm:text-6xl py-10 text-center mx-10">
+              <span className="text-4xl font-bold tracking-tight text-transparent sm:text-6xl bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]">{name}</span> 
           </div>
-          <div className="flex justify-center">
-            <ul className="flex-col list-disc list-outside text-md font-semibold tracking-tight text-gray-200 sm:text-lg py-10 mx-10">
-                <li className="">Click on each person to view all photos they're located in</li>
-                <li className="">Edit names, emails, and phone numbers, for easy messaging</li>
-            </ul>
-          </div>
+
+        <form>
+            <div class="border-b border-gray-900/10 p-12">
+                <h2 class="text-base font-semibold leading-7 text-white">Person Information</h2>
+                <p class="mt-1 text-sm leading-6 text-gray-300">Enter in the information of the person you want to send the pictures to.</p>
+
+                <div class="mt-10 flex flex-col gap-x-6 gap-y-8">
+                    <div class="sm:col-span-3">
+                        <label for="name" class="block text-sm font-medium leading-6 text-white">Name</label>
+                        <div class="mt-2">
+                            <input onChange={onNameChangeHandler} type="text" name="first-name" id="first-name" autocomplete="given-name" class="bg-gray-800 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-700 sm:text-sm sm:leading-6" />
+                        </div>
+                    </div>
+
+                
+
+                    <div class="sm:col-span-4">
+                        <label for="email" class="block text-sm font-medium leading-6 text-white">Email address</label>
+                        <div class="mt-2">
+                            <input id="email" name="email" type="email" autocomplete="email" class="bg-gray-800 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-700 sm:text-sm sm:leading-6" />
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-4">
+                        <label for="number" class="block text-sm font-medium leading-6 text-white">Phone Number</label>
+                        <div class="mt-2">
+                            <input id="number" name="number" type="tel" autocomplete="number" class="bg-gray-800 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+          
 
         
         </div>
         
       </div>
 
-        <div className="min-h-[50%]">
+        <div className="flex min-w-screen md:max-w-[50%] min-h-[50%] md:min-h-screen">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Products</h2>
   

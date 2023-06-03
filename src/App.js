@@ -3,6 +3,7 @@ import Footer from './footer'
 import HomePage from './pages/Home';
 import SortPage from './pages/Sort';
 import FacesPage from './pages/Faces';
+import PersonPage from './pages/Person';
 import './App.css';
 
 
@@ -19,6 +20,9 @@ function App() {
       break
     case "/faces":
       Component = <FacesPage />
+      break
+    case "/person":
+      Component = <PersonPage />
       break
   }
 
