@@ -1,8 +1,10 @@
 from flask import Flask, flash, request, redirect, url_for
 import face_recognition as fr
+from flask_cors import CORS
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route("/")
 def hello_world():
@@ -11,15 +13,25 @@ def hello_world():
 @app.route("/sort", methods = ['POST'])
 def hi():
 
-    #assuming request is a multipart form 
+    print("hello")
+
+    print(request.files)
+
+    #assuming request is a multipaart form 
 
     images = request.files.values()
+
+    print("hiiii")
 
     known_faces = []
     subfolders = []
 
+    
+    
 
     for image in images:
+        
+        
 
         fimage = fr.load_image_file(image)
         faces = fr.face_encodings(fimage)
@@ -38,6 +50,7 @@ def hi():
                known_faces.append(face)
                subfolders.append([image.filename])
     
+    print(subfolders)
     return subfolders
 
 
