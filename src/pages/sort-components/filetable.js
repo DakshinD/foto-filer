@@ -1,5 +1,8 @@
 
 import React from 'react'
+import FormData from 'form-data'
+import axios from 'axios'
+
 import { XMarkIcon } from '@heroicons/react/24/outline'
     
     const handleClick = (e) => {
@@ -12,8 +15,17 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
         return file.name 
     }
 
-    function sortFiles(files) {
+    async function sortFiles(files) {
 
+        const formData = new FormData()
+        files.map((item, index)=>{
+            formData.append("image"+index, item)
+        })
+
+        const res = await axios.post('http://127.0.0.1:5000/sort', formData, { 'Content-Type': 'multipart/form-data' });
+
+
+        console.log(res)
     }
 
   export default function Example({files, stateChanger}) {
@@ -38,7 +50,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
                         {/* POST to the Flask server right here */}
                         <button
-                            onClick = {sortFiles} 
+                            onClick = {()=>sortFiles(files)} 
                             className="rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
                         >
                             Sort
