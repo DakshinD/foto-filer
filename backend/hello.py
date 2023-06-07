@@ -1,7 +1,7 @@
 from flask import Flask, flash, request, redirect, url_for
 import face_recognition as fr
 from flask_cors import CORS
-import matplotlib.pyplot as plt
+from PIL import Image
 
 app = Flask(__name__)
 CORS(app)
@@ -13,45 +13,42 @@ def hello_world():
 @app.route("/sort", methods = ['POST'])
 def hi():
 
-    print("hello")
-
-    print(request.files)
-
-    #assuming request is a multipaart form 
-
     images = request.files.values()
-
-    print("hiiii")
 
     known_faces = []
     subfolders = []
 
-    
-    
-
     for image in images:
-        
-        
 
         fimage = fr.load_image_file(image)
+        flocations = fr.face_locations(fimage)
 
-        faces = fr.face_encodings(fimage)
-
+        THRESHOLD = 0.002
         
+        tArea = fimage.shape[0] * fimage.shape[1]
+        counter = 0
+
+        while counter < len(flocations):
+            face = flocations[counter]
+            area = (face[3]-face[1])*(face[0]-face[2])
+            if((area / tArea) < THRESHOLD):
+                del flocations[counter]
+            else:
+                counter+=1
+        
+        faces = fr.face_encodings(fimage, flocations)
         
         for face in faces:
-            
+          
             success = False
+            results = fr.compare_faces(known_faces, face)
 
-            print(len(faces))
-
-            for i in range(len(known_faces)):
-                if(fr.compare_faces([known_faces[i]], face)[0]):
-                    if image.filename not in subfolders[i]:
-                        subfolders[i].append(image.filename)
-                        success = True
-                        break
-            
+            for i in range(len(results)):
+                if(results[i]):
+                    subfolders[i].append(image.filename)
+                    success = True
+                    break
+          
             if(not success):
                known_faces.append(face)
                subfolders.append([image.filename])
