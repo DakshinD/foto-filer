@@ -38,20 +38,24 @@ def hi():
         
         faces = fr.face_encodings(fimage, flocations)
         
-        for face in faces:
+        for i in range(len(faces)):
+
+            face = faces[i]
           
             success = False
             results = fr.compare_faces(known_faces, face)
 
-            for i in range(len(results)):
-                if(results[i]):
-                    subfolders[i].append(image.filename)
+            obj = {"filename": image.filename, "coords": flocations[i]}
+
+            for j in range(len(results)):
+                if(results[j]):
+                    subfolders[j].append(obj)
                     success = True
                     break
           
             if(not success):
                known_faces.append(face)
-               subfolders.append([image.filename])
+               subfolders.append([obj])
     
     print(subfolders)
     return subfolders
