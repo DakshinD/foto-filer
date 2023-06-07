@@ -1,7 +1,9 @@
 
-import React from 'react'
+import {React} from 'react'
 import FormData from 'form-data'
 import axios from 'axios'
+import FacesPage from '../Faces'
+import {Link, useNavigate} from 'react-router-dom';
 
 import { XMarkIcon } from '@heroicons/react/24/outline'
     
@@ -15,6 +17,21 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
         return file.name 
     }
 
+
+
+    function RedirectToFacesPage() {
+        window.location.replace('http://localhost:3000/faces');
+    }
+
+
+  export default function Example({files, stateChanger}) {
+
+    const navigate = useNavigate()
+
+    const toFacesPage=(sortedImages)=> {
+        navigate('/faces', {state:{images: sortedImages}})
+    }
+
     async function sortFiles(files) {
 
         const formData = new FormData()
@@ -26,11 +43,10 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
 
         console.log(res)
+        toFacesPage(res.data)
+        RedirectToFacesPage()
     }
-
-  export default function Example({files, stateChanger}) {
-
-
+    
     return (
     <div className='bg-gray-900 rounded-lg'>
         <ul role="list" className="divide-y divide-gray-700 ">

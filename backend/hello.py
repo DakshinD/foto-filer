@@ -34,17 +34,23 @@ def hi():
         
 
         fimage = fr.load_image_file(image)
+
         faces = fr.face_encodings(fimage)
+
+        
         
         for face in faces:
             
             success = False
 
+            print(len(faces))
+
             for i in range(len(known_faces)):
                 if(fr.compare_faces([known_faces[i]], face)[0]):
-                    subfolders[i].append(image.filename)
-                    success = True
-                    break
+                    if image.filename not in subfolders[i]:
+                        subfolders[i].append(image.filename)
+                        success = True
+                        break
             
             if(not success):
                known_faces.append(face)

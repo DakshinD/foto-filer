@@ -2,6 +2,7 @@
 import React from 'react';
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Link, useMatch, useResolvedPath } from 'react-router-dom'
 
 const path = window.location.pathname
 
@@ -22,8 +23,6 @@ function classNames(...classes) {
 
 
 export default function Example() {
-
-    
 
     return (
         <>
@@ -52,18 +51,7 @@ export default function Example() {
                                         <div className="hidden md:block">
                                             <div className="ml-10 flex items-baseline space-x-4">
                                                 {navigation.map((item) => (
-                                                    <a
-                                                        key={item.name}
-                                                        href={item.href}
-                                                        className={classNames(
-                                                            item.current
-                                                                ? 'bg-gray-800 text-white'
-                                                                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                            'rounded-md px-3 py-2 text-sm font-medium'
-                                                        )}
-                                                    >
-                                                        {item.name}
-                                                    </a>
+                                                    <CustomLink to={item.href} key={item.name}>{item.name}</CustomLink>
                                                 ))}
                                             </div>
                                         </div>
@@ -84,20 +72,9 @@ export default function Example() {
                             </div>
 
                             <Disclosure.Panel className="md:hidden">
-                                <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+                                <div className="space-y-4 px-2 pb-3 pt-2 sm:px-3">
                                     {navigation.map((item) => (
-                                        <Disclosure.Button
-                                            key={item.name}
-                                            as="a"
-                                            href={item.href}
-                                            className={classNames(
-                                                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                'block rounded-md px-3 py-2 text-base font-medium'
-                                            )}
-                                            aria-current={item.current ? 'page' : undefined}
-                                        >
-                                            {item.name}
-                                        </Disclosure.Button>
+                                        <CustomLink to={item.href} key={item.name}>{item.name}</CustomLink>
                                     ))}
                                 </div>
                             </Disclosure.Panel>
@@ -109,3 +86,20 @@ export default function Example() {
         </>
     )
 }
+
+function CustomLink({to, children, ...props}) {
+    const resolvedPath = useResolvedPath(to)
+    const isActive = useMatch({path: resolvedPath.pathname})
+    return (
+      <div>
+        <Link
+            to={to}
+            className={
+                isActive ? 'bg-gray-800 text-white rounded-md px-3 py-2 text-sm font-medium' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+            }
+        >
+            {children}
+        </Link>
+      </div>
+    )
+  }

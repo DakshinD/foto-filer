@@ -5,32 +5,26 @@ import SortPage from './pages/Sort';
 import FacesPage from './pages/Faces';
 import PersonPage from './pages/Person';
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
 function App() {
 
-  let Component = <HomePage />
 
-  switch(window.location.pathname) {
-    case "/home":
-      Component = <HomePage />
-      break
-    case "/sort":
-      Component = <SortPage />
-      break
-    case "/faces":
-      Component = <FacesPage />
-      break
-    case "/person":
-      Component = <PersonPage />
-      break
-  }
+
 
   return (
     <div className="App">
         <div className = "Front-Page">
             <NavBar />
-            {Component}
+            <Routes>
+              <Route path="/" element={<HomePage />}/>
+              <Route path="/home" element={<HomePage />}/>
+              <Route path="/sort" element={<SortPage />}/>
+              <Route path="/faces" element={<FacesPage />}/>
+              <Route path="/person" element={<PersonPage />}/>
+            </Routes>
+
             <Footer />
         </div>
         

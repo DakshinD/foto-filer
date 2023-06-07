@@ -1,3 +1,5 @@
+import {useLocation} from 'react-router-dom';
+
 const products = [
     {
       id: 1,
@@ -79,6 +81,9 @@ const products = [
   }
   
   export default function Example() {
+
+    const location = useLocation();
+    
     return (
     <div className="flex flex-col bg-gray-100 shadow-2xl">
 
@@ -136,6 +141,18 @@ const products = [
                 
               </a>
             ))}
+            {/* THIS IS WHERE IM TESTING THE IMAGE DATA{location.state.images.map((image) => (
+              <a 
+                onClick={pushNewView}
+                key={image.name} className="bg-gray-900 rounded-2xl shadow-2xl group">
+                
+                <div className='flex flex-1 items-center justify-between'>
+                  <h3 className="text-lg text-gray-100 font-semibold p-4 ">{image.name}</h3>
+                  <p className="text-lg text-transparent font-bold p-2 me-2 bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]"> +18 </p>
+                </div>
+                
+              </a>
+            ))}*/}
           </div>
         </div>
       </div>
