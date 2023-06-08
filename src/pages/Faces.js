@@ -1,14 +1,36 @@
-import {useLocation} from 'react-router-dom';
-import {useState, useEffect} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {React, useState, useEffect} from 'react';
 
 
 
-  function pushNewView() {
-    console.log("clicked a card")
+
+
+  
+
+  const peopleRecognized = [
+    {
+      name: "Person",
+      email: "abc@gmail.com",
+      phoneNumber: "123-456-7890"
+    }
+  ]
+
+  function createPeopleObjectsList(imagesList) {
+    for( const arr in imagesList) {
+      var currPerson = {
+        name: "Person",
+        email: "abc@gmail.com",
+        phoneNumber: "123-456-7890",
+        imageNames:[]
+      }
+      for(const image in arr) {
+        const img = image.filename
+        currPerson.imageNames.push(img)
+      }
+      peopleRecognized.push(currPerson)
+      
+    }
   }
-
-
-
 
           
 
@@ -17,10 +39,18 @@ import {useState, useEffect} from 'react';
 
 
     const location = useLocation();
+
+    const navigate = useNavigate();
+    function pushNewView(currPerson) {
+      console.log("pressed push new view")
+      navigate('/faces/person', {state: {person: currPerson, imageFiles: location.state.imageFiles}})
+    }
     
     useEffect(() => {
       console.log(location.state)
     }, {location})
+
+  
     
     return (
     <div className="flex flex-col bg-gray-100 shadow-2xl">
@@ -65,19 +95,25 @@ import {useState, useEffect} from 'react';
             {
               location.state && location.state.images.map((image, index) => {
                 console.log(image)
+                const currPerson = {
+                  name: "Person22",
+                  email: "abc@gmail.com",
+                  phoneNumber: "123-456-7890",
+                  imageNames: image
+                }
                 return (
                   <a 
-                onClick={pushNewView}
+                onClick={() => {pushNewView(currPerson)}}
                 key={index} className="bg-gray-900 rounded-2xl shadow-2xl group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg rounded-b-none bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                     <img
-                      src={URL.createObjectURL((location.state.imageFiles.find((file) => file.name === image[0])))}
-                      alt={image[0]}
-                      className="h-full w-full object-cover object-center group-hover:opacity-75"
+                      src={URL.createObjectURL((location.state.imageFiles.find((file) => file.name === image[0].filename)))}
+                      alt={image[0].filename}
+                      className="h-full w-full object-cover object-center group-hover:opacity-75 "
                     />
                   </div>
                 <div className='flex flex-1 items-center justify-between'>
-                  <h3 className="text-lg text-gray-100 font-semibold p-4 ">{image[0]}</h3>
+                  <h3 className="text-lg text-gray-100 font-semibold p-4 ">{currPerson.name}</h3>
                   <p className="text-lg text-transparent font-bold p-2 me-2 bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]"> {image.length} </p>
                 </div>
                 
@@ -93,5 +129,7 @@ import {useState, useEffect} from 'react';
       
     )
   }
+
+
 
   

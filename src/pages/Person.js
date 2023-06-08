@@ -1,4 +1,5 @@
-import { useState } from "react"
+import {useLocation, useNavigate} from 'react-router-dom';
+import {React, useState, useEffect} from 'react';
 const products = [
     {
       id: 1,
@@ -81,10 +82,27 @@ const products = [
 
 export default function Example() {
 
-    const [name, setName] = useState("Person");
+    const location = useLocation();
+
+    const [person, setPerson] = useState(location.state.person);
+
+    useEffect(() => {
+      
+      
+      setPerson(location.state && location.state.person)
+      console.log("opened person view")
+      console.log(location.state.person.imageNames)
+      console.log(location.state)
+    }, {location, person})
 
     const onNameChangeHandler = event => {
-        setName(event.target.value);
+      
+      var newPerson = person
+      newPerson.name = event.target.value
+      
+      setPerson(newPerson)
+      console.log("being called")
+      location.state.person.name = event.target.value
     }
 
     return (
@@ -107,7 +125,7 @@ export default function Example() {
 
         {/* actual text */} 
         <div className="text-4xl font-bold tracking-tight text-white sm:text-6xl py-10 text-center mx-10">
-              <span className="text-4xl font-bold tracking-tight text-transparent sm:text-6xl bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]">{name}</span> 
+              <span className="text-4xl font-bold tracking-tight text-transparent sm:text-6xl bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]">{person.name}</span> 
           </div>
 
         <form>
@@ -119,7 +137,14 @@ export default function Example() {
                     <div class="sm:col-span-3">
                         <label for="name" class="block text-sm font-medium leading-6 text-white">Name</label>
                         <div class="mt-2">
-                            <input onChange={onNameChangeHandler} type="text" name="first-name" id="first-name" autocomplete="given-name" class="bg-gray-800 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-700 sm:text-sm sm:leading-6" />
+                            <input 
+                            onChange= {e => {
+                              setPerson({
+                                ...person,
+                                name: e.target.value
+                              });
+                            }}
+                             type="text" name="first-name" id="first-name" autocomplete="given-name" class="bg-gray-800 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-700 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
@@ -128,14 +153,28 @@ export default function Example() {
                     <div class="sm:col-span-4">
                         <label for="email" class="block text-sm font-medium leading-6 text-white">Email address</label>
                         <div class="mt-2">
-                            <input id="email" name="email" type="email" autocomplete="email" class="bg-gray-800 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-700 sm:text-sm sm:leading-6" />
+                            <input 
+                            onChange= {e => {
+                              setPerson({
+                                ...person,
+                                email: e.target.value
+                              });
+                            }}
+                            id="email" name="email" type="email" autocomplete="email" class="bg-gray-800 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-700 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
                     <div class="sm:col-span-4">
                         <label for="number" class="block text-sm font-medium leading-6 text-white">Phone Number</label>
                         <div class="mt-2">
-                            <input id="number" name="number" type="tel" autocomplete="number" class="bg-gray-800 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6" />
+                            <input 
+                            onChange= {e => {
+                              setPerson({
+                                ...person,
+                                phoneNumber: e.target.value
+                              });
+                            }}
+                            id="number" name="number" type="tel" autocomplete="number" class="bg-gray-800 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
                 </div>
@@ -154,24 +193,31 @@ export default function Example() {
           <h2 className="sr-only">Products</h2>
   
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {products.map((product) => (
-              <a 
-                onClick={pushNewView}
-                key={product.id} href={product.href} className="bg-gray-900 rounded-2xl shadow-2xl group">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg rounded-b-none bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                  <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
-                    className="h-full w-full object-cover object-center group-hover:opacity-75"
-                  />
-                </div>
-                <div className='flex flex-1 items-center justify-between'>
-                  <h3 className="text-lg text-gray-100 font-semibold p-4 ">{product.name}</h3>
-                  <p className="text-lg text-transparent font-bold p-2 me-2 bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]"> +18 </p>
-                </div>
+          {
+              location.state && person.imageNames.map((image, index) => {
+                console.log("got here")
+                console.log(location.state.imageFiles)
+                {/* need to fix the image grid */}
+                return (
+                  <div className='w-48 h-96'>
+                      <a 
+                key={index} className="bg-gray-900 rounded-2xl shadow-2xl group">
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                    <img
+                      src={URL.createObjectURL((location.state.imageFiles.find((file) => file.name === image.filename)))}
+                      alt={image.filename}
+                      className="h-full w-full object-cover object-center group-hover:opacity-75 "
+                    />
+                  </div>
+                
                 
               </a>
-            ))}
+                  </div>
+          
+                  
+                )
+            })
+            }
           </div>
         </div>
       </div>
