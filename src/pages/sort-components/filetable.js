@@ -28,10 +28,6 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
     const navigate = useNavigate()
 
-    const toFacesPage=(sortedImages)=> {
-        navigate('/faces', {state:{images: sortedImages}})
-    }
-
     async function sortFiles(files) {
 
         const formData = new FormData()
@@ -43,7 +39,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
 
         console.log(res)
-        toFacesPage(res.data)
+        navigate('/faces', {state:{images: res.data, imageFiles: files}})
         RedirectToFacesPage()
     }
     
