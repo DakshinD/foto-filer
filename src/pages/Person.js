@@ -1,5 +1,6 @@
 import {useLocation, useNavigate} from 'react-router-dom';
 import {React, useState, useEffect} from 'react';
+import { useSelector } from 'react-redux'
 const products = [
     {
       id: 1,
@@ -81,19 +82,27 @@ const products = [
   }
 
 export default function Example() {
-
     const location = useLocation();
 
-    const [person, setPerson] = useState(location.state.person);
+    const currentPerson = useSelector(state => {
+      return (location.state) && state.people[location.state.index]
+    })
+    const imageFiles = useSelector(state => {
+      return state.imageFiles
+    })
+
+
+
+    const [person, setPerson] = useState(currentPerson);
+
+    const indexOfPerson = location.state.index
 
     useEffect(() => {
       
       
-      setPerson(location.state && location.state.person)
+      setPerson(location.state && location.state.index)
       console.log("opened person view")
-      console.log(location.state.person.imageNames)
-      console.log(location.state)
-    }, {location, person})
+    }, {location})
 
     const onNameChangeHandler = event => {
       
@@ -194,9 +203,8 @@ export default function Example() {
   
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {
-              location.state && person.imageNames.map((image, index) => {
+              (location.state && person.imageNames > 0 && imageFiles.length > 0) && person.imageNames.map((image, index) => {
                 console.log("got here")
-                console.log(location.state.imageFiles)
                 {/* need to fix the image grid */}
                 return (
                   <div className='w-48 h-96'>
@@ -204,7 +212,7 @@ export default function Example() {
                 key={index} className="bg-gray-900 rounded-2xl shadow-2xl group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                     <img
-                      src={URL.createObjectURL((location.state.imageFiles.find((file) => file.name === image.filename)))}
+                      src={(imageFiles.find((file) => file.name === image.filename)).url}
                       alt={image.filename}
                       className="h-full w-full object-cover object-center group-hover:opacity-75 "
                     />

@@ -1,54 +1,28 @@
 import {useLocation, useNavigate} from 'react-router-dom';
 import {React, useState, useEffect} from 'react';
-
-
-
-
-
-  
-
-  const peopleRecognized = [
-    {
-      name: "Person",
-      email: "abc@gmail.com",
-      phoneNumber: "123-456-7890"
-    }
-  ]
-
-  function createPeopleObjectsList(imagesList) {
-    for( const arr in imagesList) {
-      var currPerson = {
-        name: "Person",
-        email: "abc@gmail.com",
-        phoneNumber: "123-456-7890",
-        imageNames:[]
-      }
-      for(const image in arr) {
-        const img = image.filename
-        currPerson.imageNames.push(img)
-      }
-      peopleRecognized.push(currPerson)
-      
-    }
-  }
-
-          
+import { useSelector } from 'react-redux'
+import {ImageName, Person, ImageFile} from '../features/components.js'     
 
   
   export default function Example() {
+    const people = useSelector(state => state.people)
+    const imageFiles = useSelector(state => {
+      console.log('State: ', state)
+      return state.imageFiles
+    })
 
 
-    const location = useLocation();
 
     const navigate = useNavigate();
-    function pushNewView(currPerson) {
+    function pushNewView(currPerson, idx) {
       console.log("pressed push new view")
-      navigate('/faces/person', {state: {person: currPerson, imageFiles: location.state.imageFiles}})
+      navigate('/faces/person',{state: {index: idx}})
     }
     
     useEffect(() => {
-      console.log(location.state)
-    }, {location})
+      console.log("image files")
+      console.log(imageFiles)
+    }, {imageFiles})
 
   
     
@@ -72,7 +46,7 @@ import {React, useState, useEffect} from 'react';
 
         {/* actual text */} 
           <div className="text-4xl font-bold tracking-tight text-white sm:text-6xl py-10 text-center mx-10">
-              We found <span className="text-4xl font-bold tracking-tight text-transparent sm:text-6xl bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]">{location.state != null ? location.state.images.length : 0 }</span> unique people in your pictures
+              We found <span className="text-4xl font-bold tracking-tight text-transparent sm:text-6xl bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]">{people != null ? people.length : 0 }</span> unique people in your pictures
           </div>
           <div className="flex justify-center">
             <ul className="flex-col list-disc list-outside text-md font-semibold tracking-tight text-gray-200 sm:text-lg py-10 mx-10">
@@ -93,34 +67,29 @@ import {React, useState, useEffect} from 'react';
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
 
             {
-              location.state && location.state.images.map((image, index) => {
-                console.log(image)
-                const currPerson = {
-                  name: "Person22",
-                  email: "abc@gmail.com",
-                  phoneNumber: "123-456-7890",
-                  imageNames: image
-                }
+              (people.length > 0 && imageFiles.length > 0) && people.map((person, index) => {
+                console.log(person)
                 return (
                   <a 
-                onClick={() => {pushNewView(currPerson)}}
-                key={index} className="bg-gray-900 rounded-2xl shadow-2xl group">
+                onClick={() => {pushNewView(person, index)}}
+                key={person.id} className="bg-gray-900 rounded-2xl shadow-2xl group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg rounded-b-none bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                     <img
-                      src={URL.createObjectURL((location.state.imageFiles.find((file) => file.name === image[0].filename)))}
-                      alt={image[0].filename}
+                      src={(imageFiles.find((file) => file.name === person.imageNames[0].filename)).url}
+                      alt={person.imageNames[0]}
                       className="h-full w-full object-cover object-center group-hover:opacity-75 "
                     />
                   </div>
                 <div className='flex flex-1 items-center justify-between'>
-                  <h3 className="text-lg text-gray-100 font-semibold p-4 ">{currPerson.name}</h3>
-                  <p className="text-lg text-transparent font-bold p-2 me-2 bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]"> {image.length} </p>
+                  <h3 className="text-lg text-gray-100 font-semibold p-4 ">{person.name}</h3>
+                  <p className="text-lg text-transparent font-bold p-2 me-2 bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]"> {person.imageNames.length} </p>
                 </div>
                 
               </a>
                 )
             })
             }
+            
           </div>
         </div>
       </div>

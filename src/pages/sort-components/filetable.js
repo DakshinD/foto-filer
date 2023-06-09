@@ -4,6 +4,12 @@ import FormData from 'form-data'
 import axios from 'axios'
 import FacesPage from '../Faces'
 import {Link, useNavigate} from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { nanoid } from '@reduxjs/toolkit'
+import {ImageName, Person, ImageFile} from '../../features/components'
+
+import { addPerson } from '../../features/peopleSlice'
+import { addImage } from '../../features/imageFilesSlice'
 
 import { XMarkIcon } from '@heroicons/react/24/outline'
     
@@ -28,6 +34,8 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
     const navigate = useNavigate()
 
+    const dispatch = useDispatch()
+
     async function sortFiles(files) {
 
         const formData = new FormData()
@@ -37,10 +45,29 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
         const res = await axios.post('http://127.0.0.1:5000/sort', formData, { 'Content-Type': 'multipart/form-data' });
 
-
+        // add each person to redux state
         console.log(res)
-        navigate('/faces', {state:{images: res.data, imageFiles: files}})
-        RedirectToFacesPage()
+        for (const images of res.data) {
+            var newPerson = Person(nanoid(), "New Person", "fakeemail.com", "1289493", [])
+            for (const image of images) {
+                newPerson.imageNames.push(ImageName(image.filename, image.coords))
+            }
+            dispatch(
+                addPerson(newPerson)
+            )
+        }
+
+        // add each imagefile to redux state to store
+        for(const file of files) {
+            
+            var newFile = ImageFile(file.name, URL.createObjectURL(file))
+            dispatch(
+                addImage(newFile)
+            )
+            
+        }
+        
+        navigate('/faces')
     }
     
     return (

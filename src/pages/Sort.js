@@ -1,7 +1,10 @@
 import React from 'react';
 import CustomFileInput from './sort-components/CustomFileInput'
 
+
 export default function Example() {
+
+
 
     return (
       <div className="h-screen flex justify-center items-center">
