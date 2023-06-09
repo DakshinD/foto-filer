@@ -1,6 +1,7 @@
 import {useLocation, useNavigate} from 'react-router-dom';
 import {React, useState, useEffect} from 'react';
 import { useSelector } from 'react-redux'
+import { current } from '@reduxjs/toolkit';
 const products = [
     {
       id: 1,
@@ -83,7 +84,7 @@ const products = [
 
 export default function Example() {
     const location = useLocation();
-
+    const {index} = location.state 
     const currentPerson = useSelector(state => {
       return (location.state) && state.people[location.state.index]
     })
@@ -95,13 +96,14 @@ export default function Example() {
 
     const [person, setPerson] = useState(currentPerson);
 
-    const indexOfPerson = location.state.index
+
 
     useEffect(() => {
       
       
       setPerson(location.state && location.state.index)
       console.log("opened person view")
+      console.log(currentPerson.imageNames)
     }, {location})
 
     const onNameChangeHandler = event => {
@@ -134,7 +136,7 @@ export default function Example() {
 
         {/* actual text */} 
         <div className="text-4xl font-bold tracking-tight text-white sm:text-6xl py-10 text-center mx-10">
-              <span className="text-4xl font-bold tracking-tight text-transparent sm:text-6xl bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]">{person.name}</span> 
+              <span className="text-4xl font-bold tracking-tight text-transparent sm:text-6xl bg-clip-text bg-gradient-to-r from-[#ff80b5] to-[#9089fc]">{currentPerson && currentPerson.name}</span> 
           </div>
 
         <form>
@@ -203,13 +205,13 @@ export default function Example() {
   
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {
-              (location.state && person.imageNames > 0 && imageFiles.length > 0) && person.imageNames.map((image, index) => {
+              (currentPerson.imageNames.length > 0 && imageFiles.length > 0) && currentPerson.imageNames.map((image, idx) => {
                 console.log("got here")
                 {/* need to fix the image grid */}
                 return (
                   <div className='w-48 h-96'>
-                      <a 
-                key={index} className="bg-gray-900 rounded-2xl shadow-2xl group">
+              <a 
+                key={idx} className="bg-gray-900 rounded-2xl shadow-2xl group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                     <img
                       src={(imageFiles.find((file) => file.name === image.filename)).url}
@@ -220,7 +222,9 @@ export default function Example() {
                 
                 
               </a>
-                  </div>
+              
+              </div>
+                  
           
                   
                 )
