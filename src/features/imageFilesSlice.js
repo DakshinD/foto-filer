@@ -10,8 +10,6 @@ export const imageFilesSlice = createSlice({
   reducers: {
     addImage(state, action) {
         state.push(action.payload)
-
-        console.log(action.payload)
     }
   },
 })

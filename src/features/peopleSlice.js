@@ -12,13 +12,20 @@ export const peopleSlice = createSlice({
   reducers: {
     addPerson(state, action) {
         state.push(action.payload)
-        console.log("action payload")
-        console.log(action.payload)
+    },
+    updateName(state, action) {
+      state[action.payload.index].name = action.payload.newName
+    },
+    updateEmail(state, action) {
+      state[action.payload.index].email = action.payload.newEmail
+    },
+    updatePhoneNumber(state, action) {
+      state[action.payload.index].phoneNumber = action.payload.newPhoneNumber
     }
   },
 })
 
 // Action creators are generated for each case reducer function
 // export const { increment, decrement, incrementByAmount } = counterSlice.actions
-export const {addPerson} = peopleSlice.actions
+export const {addPerson, updateName, updateEmail, updatePhoneNumber} = peopleSlice.actions
 export default peopleSlice.reducer
