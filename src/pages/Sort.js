@@ -3,7 +3,7 @@ import CustomFileInput from './sort-components/CustomFileInput'
 
 export default function Example() {
 
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         console.log("loading changed")
