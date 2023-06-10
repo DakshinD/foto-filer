@@ -22,7 +22,6 @@ function App() {
               <Route path="/home" element={<HomePage />}/>
               <Route path="/sort" element={<SortPage />}/>
               <Route path="/faces" element={<FacesPage />}/>
-              <Route path="/person" element={<PersonPage />}/>
               <Route path="/faces/person" element={<PersonPage/>}/>
             </Routes>
 
