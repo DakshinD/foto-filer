@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import FileTable from './filetable'
 import { ArrowUpTrayIcon } from '@heroicons/react/20/solid'
 
-export default function Example() {
+export default function Example({setIsLoading}) {
 
     const [uploadedFiles, setUploadedFiles] = useState([])
 
@@ -39,7 +39,7 @@ export default function Example() {
 
         {/* list of files starts here */}
         <div className='py-20'> 
-          <FileTable files={uploadedFiles} stateChanger={setUploadedFiles}/>
+          <FileTable files={uploadedFiles} stateChanger={setUploadedFiles} setIsLoading={setIsLoading}/>
         </div>
         
         

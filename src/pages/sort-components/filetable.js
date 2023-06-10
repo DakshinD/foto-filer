@@ -30,7 +30,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
     }
 
 
-  export default function Example({files, stateChanger}) {
+  export default function Example({files, stateChanger, setIsLoading}) {
 
     const navigate = useNavigate()
 
@@ -42,8 +42,13 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
         files.map((item, index)=>{
             formData.append("image"+index, item)
         })
+        // start spinner
+        setIsLoading(true)
 
         const res = await axios.post('http://127.0.0.1:5000/sort', formData, { 'Content-Type': 'multipart/form-data' });
+
+        // end spinner
+        setIsLoading(false)
 
         // add each person to redux state
         console.log(res)
