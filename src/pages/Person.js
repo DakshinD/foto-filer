@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { current } from '@reduxjs/toolkit';
 import { updateName, updateEmail, updatePhoneNumber} from '../features/peopleSlice'
 import { ArrowDownTrayIcon } from '@heroicons/react/20/solid'
+import { saveAs } from "file-saver";
 
 export default function Example() {
     const location = useLocation();
-    const {index} = location.state 
     const currentPerson = useSelector(state => {
       return (location.state) && state.people[location.state.index]
     })
@@ -24,6 +24,35 @@ export default function Example() {
     useEffect(() => {
       setPerson(location.state && location.state.index)
     }, {location})
+
+    const onDownloadFiles = async () => {
+      
+      // create zip object and folder using jszip
+      const zip = require('jszip')();
+      zip.folder(currentPerson.name)
+
+      // find all images for current persosn
+      let blobFiles = [];
+      for(const image of currentPerson.imageNames) {
+        blobFiles.push(imageFiles.find((file) => file.name === image.filename))
+      }
+      
+      // get the Blob object for each imageName and then upload the files to the zip object
+      //console.log(blobFiles)
+      for (let file = 0; file < blobFiles.length; file++) {
+        let blob = await fetch(blobFiles[file].url)
+          .then(r => r.blob())
+          .then(blobFile => console.log(zip.folder(currentPerson.name).file(blobFiles[file].name, blobFile)));
+        // Zip file with the file name.
+        
+      } 
+
+      // generate the files and use FileSaver to save the content to user's browser
+      zip.generateAsync({type: "blob"}).then(content => {
+        saveAs(content, "images.zip");
+        console.log("done")
+  });
+    }
 
 
     return (
@@ -119,7 +148,9 @@ export default function Example() {
 
 
                             {/* Download button */}
-                            <button className='w-72 items-center justify-center text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 mr-2 mb-2'> 
+                            <button 
+                            onClick={onDownloadFiles}
+                            className='w-72 items-center justify-center text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 mr-2 mb-2'> 
                               <ArrowDownTrayIcon width="24px" height="24px" className='mr-2 -ml-1'/>
                               Download Files
                             </button>
@@ -137,21 +168,20 @@ export default function Example() {
 
         <div className="flex min-w-screen md:max-w-[50%] min-h-[50%] md:min-h-screen">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="sr-only">Products</h2>
   
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 xl:gap-x-8">
           {
               (currentPerson.imageNames.length > 0 && imageFiles.length > 0) && currentPerson.imageNames.map((image, idx) => {
                 {/* need to fix the image grid */}
                 return (
-                  <div className='w-48 h-96'>
+                  <div className='w-80'>
               <a 
                 key={idx} className="bg-gray-900 rounded-2xl shadow-2xl group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                     <img
                       src={(imageFiles.find((file) => file.name === image.filename)).url}
                       alt={image.filename}
-                      className="h-full w-full object-cover object-center group-hover:opacity-75 "
+                      className="h-full w-full object-scale-down object-center group-hover:opacity-75 "
                     />
                   </div>
                 
