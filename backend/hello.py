@@ -2,9 +2,16 @@ from flask import Flask, flash, request, redirect, url_for
 import face_recognition as fr
 from flask_cors import CORS
 from PIL import Image
+import uuid
+import shutil
+import os
+import yagmail
+
 
 app = Flask(__name__)
 CORS(app)
+
+yag = yagmail.SMTP("harishankar.rajeev@gmail.com", oauth2_file="credentials.json")
 
 @app.route("/")
 def hello_world():
@@ -60,5 +67,31 @@ def hi():
     print(subfolders)
     return subfolders
 
+@app.route('/email', methods = ['POST'])
+def woah():
+    images = request.files.values()
+    email = request.form["email"]
 
+    files = []
+
+    folder = str(uuid.uuid4())
+    os.mkdir(folder)
+
+    for image in images:
+        fileName = folder + "/" + image.filename
+        image.save(fileName)
+        files.append(fileName)
+
+    print(files)
+
+    contents = ['Hey there!',
+                'Here \'s your pictures! Delivered by FotoFiler.'
+                ]
+    
+
+    yag.send(email, 'Incoming Pictures!', contents, files)
+
+    shutil.rmtree(folder)
+
+    return("hello")
     
